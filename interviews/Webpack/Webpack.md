@@ -53,37 +53,34 @@ This process helps improve web performance because a smaller bundle means faster
 
 Yes, I have used tree shaking professionally in production, especially when optimizing bundle sizes. As of Webpack 5, tree shaking is enabled by default when the mode is set to production. This means that Webpack automatically analyzes the dependency graph and removes unused code from the final bundle.
 
-One key aspect of tree shaking is that it works effectively with ES6 static imports (import/export), as these allow Webpack to determine the exact usage of modules at build time. For example, if you have a utility library but only use a few functions, Webpack will exclude the unused functions from the final bundle.
-
+One key aspect of tree shaking is that it works effectively with ES6 static imports (import/export), as these allow Webpack to determine the exact usage of modules at build time. For example, if you have a utility library but only use a few functions, Wen      
 However, there are limitations. Tree shaking doesn't work for CommonJS and dynamic imports, because they are determined at running time. So if the libraries or dependencies are not tree-shaking-friendly (e.g., they don’t use ES6 modules), unused parts of the code will still be bundled.
 
 In my case, I encountered a scenario where a third-party library was increasing the bundle size significantly. Upon inspection, I realized it wasn’t tree-shaking-friendly because it used CommonJS. To resolve this, I find alternative libary that supported ES6 modules. This reduced the bundle size and improved load times for the application.
 
 ## 5. Are you familiar with code splitting? How does it work, and what is it used for in Webpack
 
-The dependency graph in Webpack is basically a map of all the relationships between the modules in your application. Webpack starts with the entry point—usually your main file—and works its way through the code, following all the import or require statements.
+Yes. Code splitting is a really useful technique in Webpack. It’s all about breaking your code into smaller pieces—or chunks— so that you don’t end up serving one huge bundle to the browser. Instead, Webpack helps load only the pieces of code that are needed at a given time.
 
-It does this recursively, figuring out which modules depend on which, until it reaches the "leaves" of the graph—those modules that don’t depend on anything else. What you end up with is a kind of tree structure that shows how everything in your app is connected.
+Webpack starts by analyzing your dependency graph, which maps out all the relationships between the modules in your application. Based on that, it identifies opportunities to split the code. For example, if you write code that’s only used on a specific route or feature, Webpack can put that into its own chunk and load it only when it’s needed.
 
-This graph is super important because it’s what Webpack uses to do its magic. For example:
+You can implement code splitting in a few ways:
 
-Bundling: It uses the graph to figure out how to combine all your modules into one or more bundles.
-Tree Shaking: It looks at the graph to identify unused code and removes it to make the final bundle smaller.
-Code Splitting: The graph helps Webpack figure out where it can break your code into smaller chunks for things like lazy loading or dynamic imports.
-So, in short, the dependency graph is the core thing that lets Webpack take your individual files and turn them into optimized bundles ready for production.
+1. Dynamic Imports: You can use JavaScript’s import() syntax to load code on demand. This is great for lazy loading components or routes.
+2. Entry Points: If you define multiple entry points in your Webpack config, Webpack will generate separate bundles for each.
+3. Optimization Plugins: Webpack has built-in features like the SplitChunksPlugin that automatically split shared or vendor code into separate chunks to avoid duplication.
+
+The main benefit of code splitting is performance. Instead of making users download everything upfront, you’re giving them just what they need, when they need it. It makes the initial load time faster and helps improve the overall user experience, especially for larger apps.
 
 ## 6. What's the dependency graph and what's used for in webpack?
 
-The dependency graph in Webpack is a data structure that represents the relationships between the modules in an application. Webpack starts building the graph from the entry point, which is typically the main file of the application.
-
-It analyzes the code by following all the ==import== or ==require== statements recursively, mapping out how each module depends on others. This process continues until Webpack reaches the leaves of the graph, meaning modules that don’t import anything further.
-
-The result is essentially a tree-like structure that Webpack uses to organize and track all modules. This graph is crucial because it helps Webpack perform several key tasks:
+The dependency graph in Webpack is a data structure that represents the relationships between the modules. Webpack starts building the graph from the entry point, which is typically the main file of the application. It analyzes the code by following all the ==import== or ==require== statements recursively, mapping out how each module depends on others. This process continues until Webpack reaches the leaves of the graph, meaning modules that don’t import anything else. The result is essentially a tree-like structure that Webpack uses to organize and track all modules. This graph is crucial because it helps Webpack perform several key tasks:
 
 1. Bundling: Webpack uses the dependency graph to combine all modules into a single or multiple bundles.
 2. Tree Shaking: It identifies and eliminates unused modules or exports to optimize the bundle size for production.
-   Code Splitting: It can analyze the graph to determine points where the code can be split into smaller chunks for lazy loading or dynamic imports.
-3. In short, the dependency graph is the core abstraction in Webpack that enables it to transform individual files into efficient bundles optimized for production
+3. Code Splitting: It can analyze the graph to determine points where the code can be split into smaller chunks for lazy loading or dynamic imports.
+
+In short, the dependency graph is the core abstraction in Webpack that enables it to transform individual files into efficient bundles optimized for production
 
 ## 7. Are you familiar with HMR? How does it work?
 
