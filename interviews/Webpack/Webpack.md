@@ -51,11 +51,10 @@ This process helps improve web performance because a smaller bundle means faster
 
 ## 4. Have you use tree shaking professionally in production at any stage, can you give me an example
 
-Yes, I have used tree shaking professionally in production, especially when optimizing bundle sizes in Webpack-based projects. As of Webpack 5, tree shaking is enabled by default when the mode is set to production. This means that Webpack automatically analyzes the dependency graph and removes unused code from the final bundle.
+Yes, I have used tree shaking professionally in production, especially when optimizing bundle sizes. As of Webpack 5, tree shaking is enabled by default when the mode is set to production. This means that Webpack automatically analyzes the dependency graph and removes unused code from the final bundle.
 
 One key aspect of tree shaking is that it works effectively with ES6 static imports (import/export), as these allow Webpack to determine the exact usage of modules at build time. For example, if you have a utility library but only use a few functions, Webpack will exclude the unused functions from the final bundle.
 
 However, there are limitations. Tree shaking doesn't work for CommonJS and dynamic imports, because they are determined at running time. So if the libraries or dependencies are not tree-shaking-friendly (e.g., they don’t use ES6 modules), unused parts of the code will still be bundled.
 
 In my case, I encountered a scenario where a third-party library was increasing the bundle size significantly. Upon inspection, I realized it wasn’t tree-shaking-friendly because it used CommonJS. To resolve this, I find alternative libary that supported ES6 modules. This reduced the bundle size and improved load times for the application.
-
