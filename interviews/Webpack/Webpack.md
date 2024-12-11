@@ -53,7 +53,7 @@ This process helps improve web performance because a smaller bundle means faster
 
 Yes, I have used tree shaking professionally in production, especially when optimizing bundle sizes. As of Webpack 5, tree shaking is enabled by default when the mode is set to production. This means that Webpack automatically analyzes the dependency graph and removes unused code from the final bundle.
 
-One key aspect of tree shaking is that it works effectively with ES6 static imports (import/export), as these allow Webpack to determine the exact usage of modules at build time. For example, if you have a utility library but only use a few functions, Wen      
+One key aspect of tree shaking is that it works effectively with ES6 static imports (import/export), as these allow Webpack to determine the exact usage of modules at build time. For example, if you have a utility library but only use a few functions, Wen  
 However, there are limitations. Tree shaking doesn't work for CommonJS and dynamic imports, because they are determined at running time. So if the libraries or dependencies are not tree-shaking-friendly (e.g., they don’t use ES6 modules), unused parts of the code will still be bundled.
 
 In my case, I encountered a scenario where a third-party library was increasing the bundle size significantly. Upon inspection, I realized it wasn’t tree-shaking-friendly because it used CommonJS. To resolve this, I find alternative libary that supported ES6 modules. This reduced the bundle size and improved load times for the application.
@@ -84,14 +84,14 @@ In short, the dependency graph is the core abstraction in Webpack that enables i
 
 ## 7. Are you familiar with HMR? How does it work?
 
-Yes, absolutely! Hot Module Replacement, or HMR, is a really useful feature in Webpack that lets you update modules in a running application without needing to refresh the entire page.
+Yes, absolutely! Hot Module Replacement, is a really useful feature in Webpack that lets you update parts of your app while it’s running, without refreshing the whole page.
 
-Here’s how it typically works:
+Here’s how it works:
 
-First, Webpack monitors your files for changes. When you update a file, it detects that change and recompiles just the modified module, rather than rebuilding everything. Next, it sends the updated module to the browser, usually via a WebSocket connection provided by webpack-dev-server.
+First, Webpack watches your files for changes. When you edit a file, it picks up the change and recompiles just that module instead of rebuilding everything. Then, it sends the updated module to the browser, usually over a WebSocket connection using webpack-dev-server.
 
-Once the browser receives the update, the Webpack runtime swaps out the old module with the new one—right there, while the app is still running. If the module is set up to support HMR, like with React using tools like React Fast Refresh, the update happens seamlessly without losing the app’s state.
+Once the browser gets the update, the Webpack runtime replaces the old module with the new one on the fly. If the module supports HMR—for example, in a React app using React Fast Refresh—the update happens smoothly, and the app state is preserved.
 
-If the module doesn’t support HMR, Webpack may fall back to a full reload, but the goal is to avoid that whenever possible.
+If a module doesn’t support HMR, Webpack might fall back to reloading the page, but it tries to avoid that whenever possible.
 
-This whole process makes development much faster and smoother since you can see changes immediately without losing your place or waiting for a full reload. It’s especially great for fine-tuning UIs or debugging.
+This makes development so much faster because you can instantly see your changes without losing your app’s state or waiting for a full reload. It’s especially great for tweaking UI or debugging.
