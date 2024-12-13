@@ -6,7 +6,7 @@ In addition to bundling, Webpack enables various optimizations, such as code spl
 
 ## 2.Since you’ve worked a lot with Webpack and configured projects from scratch, can you walk me through how you would set up a basic Webpack configuration for a React application? Specifically, how would you handle Babel for JSX transpilation and CSS file processing?
 
-To set up a basic webpack configuration, I would start by initializing the project using ==npm init== to create ==package.json==. Then I'd install the necessary dependencies, including webpack, webpack-cli, react, Babel and loaders for transpilation and CSS processing.For example, I’d install Babel with presets like @babel/preset-env and @babel/preset-react for handling modern JavaScript and JSX.
+To set up a basic webpack configuration, I would start by initializing the project using <mark>npm init</mark> to create <mark>package.json</mark>. Then I'd install the necessary dependencies, including webpack, webpack-cli, react, Babel and loaders for transpilation and CSS processing.For example, I’d install Babel with presets like @babel/preset-env and @babel/preset-react for handling modern JavaScript and JSX.
 
 Next, I’d create a webpack.config.js file. The entry point would be the main JavaScript file, like src/index.js, and the output would specify the bundled file, typically in a dist directory. For handling React, I’d set up Babel with a babel-loader rule to transpile JavaScript and JSX files, excluding node_modules. For styles, I’d configure CSS processing with style-loader and css-loader.
 
@@ -74,7 +74,7 @@ The main benefit of code splitting is performance. Instead of making users downl
 
 ## 6. What's the dependency graph and what's used for in webpack?
 
-The dependency graph in Webpack is a data structure that represents the relationships between the modules. Webpack starts building the graph from the entry point, which is typically the main file of the application. It analyzes the code by following all the ==import== or ==require== statements recursively, mapping out how each module depends on others. This process continues until Webpack reaches the leaves of the graph, meaning modules that don’t import anything else. The result is essentially a tree-like structure that Webpack uses to organize and track all modules. This graph is crucial because it helps Webpack perform several key tasks:
+The dependency graph in Webpack is a data structure that represents the relationships between the modules. Webpack starts building the graph from the entry point, which is typically the main file of the application. It analyzes the code by following all the <mark>import</mark> or <mark>require</mark> statements recursively, mapping out how each module depends on others. This process continues until Webpack reaches the leaves of the graph, meaning modules that don’t import anything else. The result is essentially a tree-like structure that Webpack uses to organize and track all modules. This graph is crucial because it helps Webpack perform several key tasks:
 
 1. Bundling: Webpack uses the dependency graph to combine all modules into a single or multiple bundles.
 2. Tree Shaking: It identifies and eliminates unused modules or exports to optimize the bundle size for production.

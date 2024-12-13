@@ -32,6 +32,6 @@ So, while useEffect is powerful, it’s important to use it carefully to avoid p
 
 ## Why can't we use an async function as a callback to useEffect
 
-We can't use an async function directly because useEffect expects the callback to return a cleanup function or undefined. However, an async function always returns a promise, which doesn’t fit this expectation. React doesn't know how to handle a promise for cleanup.
+useEffect expects its callback to return a cleanup function or undefined. Cleanup functions are used to handle things like unsubscribing from an event or canceling a timer when the component unmounts or the effect re-runs.
 
-To handle async logic in useEffect, you can define the async function inside the effect and call it, instead of returning it directly. This way, useEffect can still return a cleanup function properly.
+An async function, on the other hand, always returns a promise, even if you don't explicitly return one. Promises are not functions and cannot be used as cleanup logic. React would not know how to handle the promise as a return value, which is why it disallows the use of async functions directly in useEffect.
