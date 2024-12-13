@@ -19,3 +19,19 @@ An Error Boundary Component is used in React to catch JavaScript errors in its c
 For example, if a component fetching data encounters an error, wrapping it in an error boundary ensures the error doesn’t throw up and crash the entire app. Instead, the error boundary can display a fallback UI, like “Something went wrong.”
 
 This makes your app more predictable and user-friendly, as it prevents layout shifts or a complete app crash, especially in cases where server or data errors might otherwise break the UI. Error boundaries improve the overall stability of your app.
+
+## Are you familiar with useEffect hook
+
+The useEffect hook in React is used to perform side effects in a functional component. Side effects are tasks like updating the DOM, fetching data, or interacting with APIs. For instance, if you change a state variable and need to call an analytics system or update local storage, useEffect is the right tool to handle that. The advantages like seperating and efficiently manage the side effects from the main logic and keep the component cleaner and more focus on rendering. And it has flexible dependencies management.
+
+However, when useEffect was first introduced, many developers, including myself, used it too broadly. For example, we might trigger an effect every time a state variable changes, which could cause unnecessary re-renders. Since useEffect runs after the component renders, it can trigger another re-render, leading to performance issues if overused.
+
+One of the challenges is that, by default, re-renders in a parent component will trigger re-renders in child components as well, unless you optimize with hooks like useMemo or useCallback.
+
+So, while useEffect is powerful, it’s important to use it carefully to avoid performance bottlenecks caused by unnecessary re-renders.
+
+## Why can't we use an async function as a callback to useEffect
+
+We can't use an async function directly because useEffect expects the callback to return a cleanup function or undefined. However, an async function always returns a promise, which doesn’t fit this expectation. React doesn't know how to handle a promise for cleanup.
+
+To handle async logic in useEffect, you can define the async function inside the effect and call it, instead of returning it directly. This way, useEffect can still return a cleanup function properly.
