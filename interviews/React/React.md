@@ -55,3 +55,53 @@ In React, essential state refers to the core data that your application directly
 Derived state, on the other hand, is data that can be computed or inferred from the essential state and does not need to be stored separately. For example, if you have a list of items in your essential state, a derived state might be a filtered version of that list. Since derived state can always be recalculated from the essential state, storing it separately is unnecessary and can lead to bugs, like data getting out of sync.
 
 The key takeaway is: only store the minimal essential state in React, and compute derived state on-the-fly to keep your app's logic clean and predictable.
+
+## What's the disadvantage of placing state in React.context
+
+One major disadvantage of using React Context for state management is that when the state changes, all components that consume the context will re-render. This can lead to performance issues, especially if the context is managing state that frequently changes or if it's being consumed by many components.
+
+To mitigate this, it's a good practice to:
+
+Keep the state as close to where it's used as possible.
+Split state into multiple contexts if different parts of the application need to consume independent pieces of state. This minimizes unnecessary re-renders by ensuring that only the components that depend on a specific piece of state are affected.
+In general, lifting state too far up the component tree, whether in context or elsewhere, can make it harder to manage and optimize rendering. Context is powerful but should be used carefully for global or shared state.
+
+```javascript
+import React, { createContext, useContext, useState } from "react";
+
+// Create a single context
+const AppContext = createContext();
+
+function App() {
+  const [user, setUser] = useState({ name: "John Doe" });
+  const [theme, setTheme] = useState("light");
+
+  return (
+    <AppContext.Provider value={{ user, setUser, theme, setTheme }}>
+      <UserProfile />
+      <ThemeSwitcher />
+    </AppContext.Provider>
+  );
+}
+```
+
+optimized
+
+```javascript
+const UserContext = createContext();
+const ThemeContext = createContext();
+
+function App() {
+  const [user, setUser] = useState({ name: "John Doe" });
+  const [theme, setTheme] = useState("light");
+
+  return (
+    <UserContext.Provider value={{ user, setUser }}>
+      <ThemeContext.Provider value={{ theme, setTheme }}>
+        <UserProfile />
+        <ThemeSwitcher />
+      </ThemeContext.Provider>
+    </UserContext.Provider>
+  );
+}
+```
