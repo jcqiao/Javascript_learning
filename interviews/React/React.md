@@ -47,3 +47,11 @@ Authentication state: Authentication needs to be globally accessible since many 
 Global settings or complex state transitions: If you have non-trivial state transitions, like handling user settings that impact multiple parts of the app (e.g., a premium user vs. a standard user), you might need something more robust. In such cases, I use a state management library like Redux or Recoil, or even a state machine, depending on the complexity. These tools are excellent for handling global states with clear and predictable state transitions.
 
 So, my approach is to distribute state management based on the type of data and its scope, which keeps the app organized and efficient.
+
+## What is the difference between essential and derived state
+
+In React, essential state refers to the core data that your application directly depends on and controls, like user input, API responses, or application settings. This state is typically managed using hooks like useState or state management libraries, and it's the source of truth in your component.
+
+Derived state, on the other hand, is data that can be computed or inferred from the essential state and does not need to be stored separately. For example, if you have a list of items in your essential state, a derived state might be a filtered version of that list. Since derived state can always be recalculated from the essential state, storing it separately is unnecessary and can lead to bugs, like data getting out of sync.
+
+The key takeaway is: only store the minimal essential state in React, and compute derived state on-the-fly to keep your app's logic clean and predictable.
