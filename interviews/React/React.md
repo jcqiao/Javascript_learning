@@ -35,3 +35,15 @@ So, while useEffect is powerful, it’s important to use it carefully to avoid p
 useEffect expects its callback to return a cleanup function or undefined. Cleanup functions are used to handle things like unsubscribing from an event or canceling a timer when the component unmounts or the effect re-runs.
 
 An async function, on the other hand, always returns a promise, even if you don't explicitly return one. Promises are not functions and cannot be used as cleanup logic. React would not know how to handle the promise as a return value, which is why it disallows the use of async functions directly in useEffect.
+
+## What's the best solution to handle State Management in React and why?
+
+The best solution for state management in React really depends on the type of state you're working with and the requirements of your app. From my experience, I manage state differently based on its purpose:
+
+Backend data: I usually keep backend data in the local component state if it’s only used by that component. If it needs to be shared between two or three components, I lift it up to a common parent. Yes, this might involve some prop drilling, but for small-scale data sharing, it’s manageable and keeps things simple.
+
+Authentication state: Authentication needs to be globally accessible since many components might rely on user information or permissions. For this, I find React Context to be a great solution because it can broadcast state across the entire component tree effectively.
+
+Global settings or complex state transitions: If you have non-trivial state transitions, like handling user settings that impact multiple parts of the app (e.g., a premium user vs. a standard user), you might need something more robust. In such cases, I use a state management library like Redux or Recoil, or even a state machine, depending on the complexity. These tools are excellent for handling global states with clear and predictable state transitions.
+
+So, my approach is to distribute state management based on the type of data and its scope, which keeps the app organized and efficient.
