@@ -2,6 +2,30 @@
 
 Yes I worked with react so far since 2019
 
+## What's the React
+
+React is a javascript library developed by facebook for builing user interface. It uses a component-based architecture and declarative approach to simplify the process of creating dynamic and interactive UIs. React was created to solve challenges in managing complex UIs. such as performance issues and difficult to maintain code. Its key innovation is the Virtual DOM, which efficiently updates the real DOM by calculating and applying only the necessary changes, improving performance.React's component-based design makes code reusable and modular, while its unidirectional data flow ensures predictable state management.
+
+### Components
+
+Components are the building blocks of React applications, representing reusable pieces of UI like buttons, inputs, or even entire pages. In React, a component is essentially a JavaScript function that returns JSX, a syntax similar to HTML but with JavaScript capabilities. Unlike static HTML, JSX allows you to embed dynamic values using curly braces. For example, you can dynamically display data or update attributes. Components make it easy to break an application into smaller, manageable parts, promoting reusability and consistency.
+
+### Key props
+
+The key prop in React is used to help React identify and differentiate components, especially when rendering lists. It provides a unique identifier for each component or element in a list, allowing React to efficiently track changes such as additions, removals, or reordering of items. Typically, the key is assigned a unique value, such as an item's ID, to ensure proper updates and avoid unnecessary re-renders.
+
+### Why react uses classname instead of class
+
+React uses className instead of class because class is a reserved keyword in JavaScript. If React allowed class as an attribute, it could cause conflicts or errors in the code. To avoid this, React uses className, which works seamlessly in JSX while still representing the same thing as the class attribute in regular HTML.
+
+It's a practical decision to make React's syntax compatible with JavaScript while keeping it intuitive for developers who are already familiar with HTML.
+
+### How does rendering work
+
+React knows how and when to render using "Virtual DOM". DOM stands for Document Object Model which is what every browser uses to model all the html elements on a web page and the data structure looks like a tree.
+Here are steps:
+State changes then react updates virtual dom which is quiker to update than a real dom. Then react uses a process called diffing to compare the updated virtual dom to previous version to see what's changed once it sees what's the different react uses a process call reconcilation to update the real dom with the changes that it found.
+
 ## What's the pure component in React?
 
 A **Pure Component** in React is a component that uses a shallow comparison of its props and state to decide whether to re-render. If the props or state haven’t changed, it skips re-rendering, improving performance. However, since the comparison is shallow, it might miss updates to complex objects or arrays if their references don't change—so you need to manage state and props carefully.
@@ -11,6 +35,41 @@ Nowadays, Pure Components are less commonly used directly because functional com
 For example, when a parent component re-renders, React will re-run all its child components by default. However, if you use React.memo for function components or PureComponent for class components, you can avoid unnecessary child re-renders. On the other hand, if a child re-renders, it won’t trigger a re-render of the parent unless it explicitly changes the parent’s state, like through a callback.
 
 In short, Pure Components are a great way to optimize performance, especially in class-based components, but in modern React, React.memo is often the go-to tool for this purpose.
+
+## What's the pure functions in React?
+
+In React, pure functions are just functions that always give the same output if you give them the same input, and they don’t mess with anything outside of themselves. They don’t change variables, make API calls, or touch the DOM—they’re predictable and self-contained.
+
+For example:
+
+```javascript
+function add(a, b) {
+  return a + b;
+}
+```
+
+This is a pure function because if you give it the numbers 2 and 3, it’ll always return 5. It doesn’t depend on anything else, and it doesn’t change anything outside itself.
+
+Pure functions are important in React because:
+
+- They’re predictable: It’s easy to understand and debug them since their behavior is consistent.
+- They help with performance: Skipping unnecessary updates when nothing changes. For example, with React.memo, you can make a component re-render only when its props change.
+
+In short, pure functions keep things clean, predictable, and efficient, which fits perfectly with React’s philosophy of building maintainable UI.
+
+### What's the side effects in React
+
+In React, side effects refer to any operations or actions that affect something outside the component’s scope, such as:
+
+- Fetching data from an API
+- Updating the DOM manually
+- Setting up event listeners
+- Modifying global variables
+- Interacting with third-party libraries
+
+### What's the Suspense Component and why we need it
+
+It's a special component that helps you handle loading a component or loads data. Suspense is helpful for components that take some time to fetch data it provides a better user experience to show a callback component like a loading spinner until the data is avaliable. It's also useful for lavily loading a component which lets us load only when it's needed
 
 ## What's the ERROR BOUNDARY COMPONENT and what is it used for and why do we have it?
 
