@@ -10,9 +10,13 @@ React is a JavaScript library developed by Facebook for building user interfaces
 
 Components are the building blocks of React applications, representing reusable pieces of UI like buttons, inputs, or even entire pages. In React, a component is essentially a JavaScript function that returns JSX, a syntax similar to HTML but with JavaScript capabilities. Unlike static HTML, JSX allows you to embed dynamic values using curly braces. Components make it easy to break an application into smaller, manageable parts, promoting reusability and consistency.
 
+### JSX
+
+JSX stands for javascript xml, which looks like html but with javascript capabilities, representing the structure of UI. JSX is converted into Virtual DOM by React.createElement() calls. Since it has javascript capabilities, react can efficiently track changes in the VDOM and update only the necessary parts of the real DOM, improving performance.
+
 ### Key props
 
-The key prop in React is used to help React identify and differentiate components, especially when rendering lists. It provides a unique identifier for each component or element in a list, allowing React to efficiently track changes such as additions, removals, or reordering of items. Ensure proper updates and avoid unnecessary re-renders.
+The key prop is very important in Reconciliation phase, as it helps react identify and differentiate components efficiently especially in lists. It's a unique identifier such as id, allowing React to efficiently track changes such as additions, removals, or reordering of items. Ensure proper updates and avoid unnecessary re-renders. But using index is generally not a good choice because it can lead to performance issues and incorrect behavior, for example, when we insert a item on the top of list, it compare the new vdom with the old one, and found everything is different and then re-render everything.
 
 ### Why react uses classname instead of class
 
@@ -20,7 +24,7 @@ As we know, React is a javascript libary and components are functions return jsx
 
 ### How does rendering work
 
-Rendering in React revolves around the Virtual DOM, which is essentially a JavaScript object representing the structure of the UI. As we know, components return JSX which is converted into this Virtual DOM by Babel.
+Rendering in React revolves around the Virtual DOM, which is essentially a JavaScript object representing the structure of the UI. It is converted by React.creatElement() method.
 
 When state or props change, React creates a new Virtual DOM tree to represent the updated UI. It then compares the new tree with the old one using a diffing algorithm to identify the differences. The algorithm is based on two key assumptions:
 
@@ -74,7 +78,7 @@ In React, side effects refer to any operations or actions that affect something 
 
 ### What's the Suspense Component and why we need it
 
-The Suspense component in React is a special tool that helps manage loading states for things like fetching data or lazy-loading components. It improves the user experience by allowing you to show something like a loading spinner or a placeholder while waiting for content to load. Ikt makes your app feel more polished and seamless by handling delays in rendering without showing a blank screen.
+The Suspense component in React is a special tool that helps manage loading states for things like fetching data or lazy-loading components. It improves the user experience by allowing you to show something like a loading spinner or a placeholder while waiting for content to load instead of showing a blank screen.
 
 ## What's the ERROR BOUNDARY COMPONENT and what is it used for and why do we have it?
 
@@ -86,11 +90,9 @@ This makes your app more predictable and user-friendly, as it prevents layout sh
 
 ## Are you familiar with useEffect hook
 
-The useEffect hook in React is used to perform side effects in a functional component. Side effects are tasks like updating the DOM, fetching data, or interacting with APIs. For instance, if you change a state variable and need to call an analytics system or update local storage, useEffect is the right tool to handle that. The advantages like seperating and efficiently manage the side effects from the main logic and keep the component cleaner and more focus on rendering. And it has flexible dependencies management.
+The useEffect hook in React is used to handle side effects in a functional component. Side effects includes updating the DOM, fetching data, or setting up subscriptions or timers. For example, you might use useEffect to fetch data when a component mounts or call an analytics service when a state variable changes. The advantages like seperating and efficiently manage the side effects from the main logic and keep the component cleaner and more focus on rendering. And it has flexible dependencies management, we should know is a shadow comparison, so we need to use carefully.
 
-However, when useEffect was first introduced, many developers, including myself, used it too broadly. For example, we might trigger an effect every time a state variable changes, which could cause unnecessary re-renders. Since useEffect runs after the component renders, it can trigger another re-render, leading to performance issues if overused.
-
-One of the challenges is that, by default, re-renders in a parent component will trigger re-renders in child components as well, unless you optimize with hooks like useMemo or useCallback.
+when useEffect was first introduced, many developers, including myself, used it too broadly. For example, we might trigger an effect every time when a complex state variable changes or the value is same but changes their reference every time, which could cause unnecessary re-renders. Since useEffect runs after the component renders, if we don't use it carefully, it can trigger another re-render, leading to performance issues.
 
 So, while useEffect is powerful, it’s important to use it carefully to avoid performance bottlenecks caused by unnecessary re-renders.
 
@@ -102,15 +104,18 @@ An async function, on the other hand, always returns a promise, even if you don'
 
 ## What's the best solution to handle State Management in React and why?
 
-The best solution for state management in React really depends on the type of state you're working with and the requirements of your app. From my experience, I manage state differently based on its purpose:
+The best solution for state management in React depends on the specific requirements and complexity of the application. Based on my experience, I approach state management differently depending on the purpose of the data:
 
-Backend data: I usually keep backend data in the local component state if it’s only used by that component. If it needs to be shared between two or three components, I lift it up to a common parent. Yes, this might involve some prop drilling, but for small-scale data sharing, it’s manageable and keeps things simple.
+1. **Local Component State:**  
+   For backend data used by only one component, I keep it in the local state of that component. If the data needs to be shared between a few components, I lift the state to a common parent. While this may involve some prop drilling, it keeps things simple and manageable for small-scale data sharing.
 
-Authentication state: Authentication needs to be globally accessible since many components might rely on user information or permissions. For this, I find React Context to be a great solution because it can broadcast state across the entire component tree effectively.
+2. **Authentication State:**  
+   Authentication data is typically global since multiple components often rely on user information or permissions. For this, I use React Context, which is effective for broadcasting state across the entire component tree without excessive prop drilling.
 
-Global settings or complex state transitions: If you have non-trivial state transitions, like handling user settings that impact multiple parts of the app (e.g., a premium user vs. a standard user), you might need something more robust. In such cases, I use a state management library like Redux or Recoil, or even a state machine, depending on the complexity. These tools are excellent for handling global states with clear and predictable state transitions.
+3. **Global State or Complex State Transitions:**  
+   When dealing with global settings or complex state transitions (e.g., user roles like premium vs. standard that affect multiple parts of the app), I prefer using a state management library like Redux or Recoil. Recoil, in particular, is lightweight, integrates seamlessly with React, and provides fine-grained updates, which helps optimize performance. For extremely complex scenarios, I might consider using a state machine (e.g., XState) for clear and predictable state transitions.
 
-So, my approach is to distribute state management based on the type of data and its scope, which keeps the app organized and efficient.
+By distributing state management based on the type and scope of the data, I ensure that the application remains organized, maintainable, and efficient.
 
 ## What is the difference between essential and derived state
 
