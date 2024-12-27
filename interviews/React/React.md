@@ -109,11 +109,11 @@ The best solution for state management in React depends on the specific requirem
 1. **Local Component State:**  
    For backend data used by only one component, I keep it in the local state of that component. If the data needs to be shared between a few components, I lift the state to a common parent. While this may involve some prop drilling, it keeps things simple and manageable for small-scale data sharing.
 
-2. **Authentication State:**  
+2. **Authentication or Theme State:**  
    Authentication data is typically global since multiple components often rely on user information or permissions. For this, I use React Context, which is effective for broadcasting state across the entire component tree without excessive prop drilling.
 
 3. **Global State or Complex State Transitions:**  
-   When dealing with global settings or complex state transitions (e.g., user roles like premium vs. standard that affect multiple parts of the app), I prefer using a state management library like Redux or Recoil. Recoil, in particular, is lightweight, integrates seamlessly with React, and provides fine-grained updates, which helps optimize performance. For extremely complex scenarios, I might consider using a state machine (e.g., XState) for clear and predictable state transitions.
+   When dealing with global settings or complex state transitions (e.g., user roles like premium vs. standard that affect multiple parts of the app), I prefer using a state management library like Redux or Recoil. Recoil, in particular, is lightweight, integrates seamlessly with React, and provides fine-grained updates, which helps optimize performance. For extremely complex scenarios, I might consider using a state machine (e.g., [XState](https://stately.ai/docs/xstate) ) for clear and predictable state transitions.
 
 By distributing state management based on the type and scope of the data, I ensure that the application remains organized, maintainable, and efficient.
 
